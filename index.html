@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Физика: Защита Солнечной системы</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Дополнительные стили для масштабирования */
+        .game-container {
+            overflow: hidden;
+        }
+        
+        /* Для очень маленьких экранов */
+        @media (max-width: 350px) {
+            .menu-content {
+                transform: scale(0.9);
+                transform-origin: top center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Главное меню -->
+        <div class="main-menu active" id="mainMenu">
+            <div class="menu-content">
+                <h1 class="game-title">
+                    <span class="title-icon">⚛️</span>
+                    <span class="title-text">ФИЗИКА</span>
+                </h1>
+                <div class="game-subtitle">Защита Солнечной системы</div>
+                
+                <div class="menu-description">
+                    <p>🌌 <strong>Общая идея:</strong> Защитите планеты от метеоритов, правильно отвечая на вопросы по физике!</p>
+                    <p>🎯 <strong>Команды:</strong> Команда A защищает внутренние планеты, Команда B — внешние.</p>
+                    <p>⚠️ <strong>Важно:</strong> Команды не соревнуются, а вместе обороняют Солнечную систему!</p>
+                </div>
+                
+                <div class="menu-buttons">
+                    <button class="menu-btn start-btn" id="startGameBtn">
+                        <i class="fas fa-rocket"></i> Начать игру
+                    </button>
+                    <button class="menu-btn teams-btn" id="teamsSetupBtn">
+                        <i class="fas fa-users"></i> Настройка команд
+                    </button>
+                    <button class="menu-btn rules-btn" id="rulesBtn">
+                        <i class="fas fa-book"></i> Правила игры
+                    </button>
+                    <button class="menu-btn topics-btn" id="topicsBtn">
+                        <i class="fas fa-atom"></i> Темы вопросов
+                    </button>
+                </div>
+                
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Физика до 11 класса</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-meteor"></i>
+                        <span>Реалистичные метеориты</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>Все планеты Солнечной системы</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-footer">
+                <div class="controls-hint">
+                    <i class="fas fa-mouse-pointer"></i> Управление: клик для выбора ответа
+                </div>
+                <div class="github-link">
+                    <i class="fab fa-github"></i> Доступно на GitHub
+                </div>
+            </div>
+        </div>
+
+        <!-- Настройка команд -->
+        <div class="teams-setup" id="teamsSetup">
+            <div class="setup-header">
+                <h2><i class="fas fa-users"></i> Настройка команд</h2>
+                <button class="back-btn" id="backToMainBtn">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+            </div>
+            
+            <div class="teams-container">
+                <div class="team-setup team-a">
+                    <h3 class="team-title team-a-title">
+                        <i class="fas fa-sun"></i> Команда A
+                    </h3>
+                    <p class="team-description">Защищает внутренние планеты: Меркурий, Венера, Земля</p>
+                    
+                    <div class="team-input">
+                        <label for="teamAName">Название команды:</label>
+                        <input type="text" id="teamAName" value="Команда Альфа" maxlength="20">
+                    </div>
+                    
+                    <div class="team-color">
+                        <label>Цвет команды:</label>
+                        <div class="color-options">
+                            <div class="color-option selected" data-color="#3a86ff" style="background-color: #3a86ff;"></div>
+                            <div class="color-option" data-color="#00b4d8" style="background-color: #00b4d8;"></div>
+                            <div class="color-option" data-color="#7209b7" style="background-color: #7209b7;"></div>
+                            <div class="color-option" data-color="#ff006e" style="background-color: #ff006e;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-planets">
+                        <h4>Защищаемые планеты:</h4>
+                        <div class="planets-list">
+                            <div class="planet-item">
+                                <div class="planet-icon mercury"></div>
+                                <span>Меркурий</span>
+                            </div>
+                            <div class="planet-item">
+                                <div class="planet-icon venus"></div>
+                                <span>Венера</span>
+                            </div>
+                            <div class="planet-item">
+                                <div class="planet-icon earth"></div>
+                                <span>Земля</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-setup team-b">
+                    <h3 class="team-title team-b-title">
+                        <i class="fas fa-moon"></i> Команда B
+                    </h3>
+                    <p class="team-description">Защищает внешние планеты: Марс, Юпитер, Сатурн, Уран, Нептун</p>
+                    
+                    <div class="team-input">
+                        <label for="teamBName">Название команды:</label>
+                        <input type="text" id="teamBName" value="Команда Бета" maxlength="20">
+                    </div>
+                    
+                    <div class="team-color">
+                        <label>Цвет команды:</label>
+                        <div class="color-options">
+                            <div class="color-option selected" data-color="#ffbe0b" style="background-color: #ffbe0b;"></div>
+                            <div class="color-option" data-color="#fb5607" style="background-color: #fb5607;"></div>
+                            <div class="color-option" data-color="#8338ec" style="background-color: #8338ec;"></div>
+                            <div class="color-option" data-color="#06d6a0" style="background-color: #06d6a0;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-planets">
+                        <h4>Защищаемые планеты:</h4>
+                        <div class="planets-list">
+                            <div class="planet-item">
+                                <div class="planet-icon mars"></div>
+                                <span>Марс</span>
+                            </div>
+                            <div class="planet-item">
+                                <div class="planet-icon jupiter"></div>
+                                <span>Юпитер</span>
+                            </div>
+                            <div class="planet-item">
+                                <div class="planet-icon saturn"></div>
+                                <span>Сатурн</span>
+                            </div>
+                            <div class="planet-item">
+                                <div class="planet-icon uranus"></div>
+                                <span>Уран</span>
+                            </div>
+                            <div class="planet-item">
+                                <div class="planet-icon neptune"></div>
+                                <span>Нептун</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="setup-footer">
+                <button class="start-game-btn" id="startGameFromSetupBtn">
+                    <i class="fas fa-play-circle"></i> Начать игру с этими командами
+                </button>
+            </div>
+        </div>
+
+        <!-- Правила игры -->
+        <div class="rules-screen" id="rulesScreen">
+            <div class="rules-header">
+                <h2><i class="fas fa-book"></i> Правила игры</h2>
+                <button class="back-btn" id="backToMainFromRulesBtn">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+            </div>
+            
+            <div class="rules-content">
+                <div class="rule-section">
+                    <h3><i class="fas fa-gamepad"></i> Основная механика</h3>
+                    <ul>
+                        <li>Каждая команда получает свои вопросы одновременно</li>
+                        <li>Вопросы разные для каждой команды, сложность растет</li>
+                        <li>Нельзя списать или запомнить порядок ответов</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-section">
+                    <h3><i class="fas fa-meteor"></i> Метеориты</h3>
+                    <ul>
+                        <li>Из глубины космоса летят метеориты разного размера, скорости и прочности</li>
+                        <li>Легкий вопрос → маленький метеорит</li>
+                        <li>Средний вопрос → крупнее</li>
+                        <li>Сложный вопрос → огромный, быстрый метеорит</li>
+                    </ul>
+                </div>
+                
+                <div class="rule-section">
+                    <h3><i class="fas fa-check-circle"></i> Ответы и последствия</h3>
+                    <div class="consequences">
+                        <div class="consequence correct">
+                            <h4>Правильный ответ:</h4>
+                            <p>Метеорит взрывается и рассыпается на пыль</p>
+                            <p>Планета остается целой и светится щитом</p>
+                            <p>Команда получает очки</p>
+                        </div>
+                        <div class="consequence incorrect">
+                            <h4>Неправильный ответ:</h4>
+                            <p>Метеорит попадает в планету</p>
+                            <p>Планета трескается, теряет атмосферу, может выйти из орбиты</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rule-section">
+                    <h3><i class="fas fa-trophy"></i> Победа и поражение</h3>
+                    <ul>
+                        <li>Победа: все планеты сохранены, появляется надпись "Гравитация под контролем"</li>
+                        <li>Поражение: потеря ключевой планеты (Земли или Юпитера), система разваливается</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Темы вопросов -->
+        <div class="topics-screen" id="topicsScreen">
+            <div class="topics-header">
+                <h2><i class="fas fa-atom"></i> Темы вопросов</h2>
+                <button class="back-btn" id="backToMainFromTopicsBtn">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+            </div>
+            
+            <div class="topics-content">
+                <p class="topics-description">Вопросы охватывают физику до 11 класса:</p>
+                
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Механика</h3>
+                        <p>Законы Ньютона, движение, энергия, импульс</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>Давление</h3>
+                        <p>Жидкости, газы, закон Паскаля, Архимедова сила</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Электричество</h3>
+                        <p>Цепи, закон Ома, мощность, конденсаторы</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-magnet"></i>
+                        </div>
+                        <h3>Магнетизм</h3>
+                        <p>Магнитные поля, сила Лоренца, электромагнитная индукция</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <h3>Оптика</h3>
+                        <p>Отражение, преломление, линзы, волновая оптика</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Астрономия</h3>
+                        <p>Планеты, звезды, гравитация, космические законы</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-radiation"></i>
+                        </div>
+                        <h3>Ядерная физика</h3>
+                        <p>Радиоактивность, ядерные реакции, энергия атома</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <div class="topic-icon">
+                            <i class="fas fa-temperature-high"></i>
+                        </div>
+                        <h3>Термодинамика</h3>
+                        <p>Температура, теплообмен, законы термодинамики</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Игровой интерфейс -->
+        <div class="game-screen" id="gameScreen">
+            <!-- Космическая сцена -->
+            <div class="space-scene">
+                <canvas id="spaceCanvas"></canvas>
+                
+                <!-- Солнце -->
+                <div class="sun"></div>
+                
+                <!-- Орбиты и планеты -->
+                <div class="orbits-container">
+                    <!-- Орбита Меркурия -->
+                    <div class="orbit orbit-1">
+                        <div class="planet mercury" id="mercury"></div>
+                    </div>
+                    
+                    <!-- Орбита Венеры -->
+                    <div class="orbit orbit-2">
+                        <div class="planet venus" id="venus"></div>
+                    </div>
+                    
+                    <!-- Орбита Земли -->
+                    <div class="orbit orbit-3">
+                        <div class="planet earth" id="earth"></div>
+                    </div>
+                    
+                    <!-- Орбита Марса -->
+                    <div class="orbit orbit-4">
+                        <div class="planet mars" id="mars"></div>
+                    </div>
+                    
+                    <!-- Орбита Юпитера -->
+                    <div class="orbit orbit-5">
+                        <div class="planet jupiter" id="jupiter"></div>
+                    </div>
+                    
+                    <!-- Орбита Сатурна -->
+                    <div class="orbit orbit-6">
+                        <div class="planet saturn" id="saturn">
+                            <div class="saturn-ring"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Орбита Урана -->
+                    <div class="orbit orbit-7">
+                        <div class="planet uranus" id="uranus"></div>
+                    </div>
+                    
+                    <!-- Орбита Нептуна -->
+                    <div class="orbit orbit-8">
+                        <div class="planet neptune" id="neptune"></div>
+                    </div>
+                </div>
+                
+                <!-- Метеориты будут добавляться динамически -->
+                <div class="meteors-container" id="meteorsContainer"></div>
+            </div>
+            
+            <!-- Панель управления и информации -->
+            <div class="game-ui">
+                <!-- Панель команд -->
+                <div class="teams-panel">
+                    <div class="team-panel team-a-panel">
+                        <div class="team-header">
+                            <h3 id="teamANameDisplay">Команда Альфа</h3>
+                            <div class="team-score" id="teamAScore">0</div>
+                        </div>
+                        <div class="team-planets-status">
+                            <div class="planet-status" data-planet="mercury">
+                                <div class="planet-mini mercury"></div>
+                                <div class="planet-health">
+                                    <div class="health-bar"></div>
+                                </div>
+                            </div>
+                            <div class="planet-status" data-planet="venus">
+                                <div class="planet-mini venus"></div>
+                                <div class="planet-health">
+                                    <div class="health-bar"></div>
+                                </div>
+                            </div>
+                            <div class="planet-status" data-planet="earth">
+                                <div class="planet-mini earth"></div>
+                                <div class="planet-health">
+                                    <div class="health-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="question-container" id="teamAQuestion">
+                            <div class="question-header">
+                                <span class="question-difficulty easy">Легкий</span>
+                                <span class="question-timer" id="teamATimer">30</span>
+                            </div>
+                            <p class="question-text">С какой скоростью падает тело с высоты 20 метров, если сопротивление воздуха не учитывать? (g≈10 м/с²)</p>
+                            <div class="answer-options">
+                                <button class="answer-option" data-index="0">10 м/с</button>
+                                <button class="answer-option" data-index="1">20 м/с</button>
+                                <button class="answer-option" data-index="2">30 м/с</button>
+                                <button class="answer-option" data-index="3">40 м/с</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <div class="game-pause" id="pauseBtn">
+                            <i class="fas fa-pause"></i>
+                        </div>
+                        <div class="game-sound" id="soundToggle">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <div class="game-help" id="helpBtn">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="team-panel team-b-panel">
+                        <div class="team-header">
+                            <h3 id="teamBNameDisplay">Команда Бета</h3>
+                            <div class="team-score" id="teamBScore">0</div>
+                        </div>
+                        <div class="team-planets-status">
+                            <div class="planet-status" data-planet="mars">
+                                <div class="planet-mini mars"></div>
+                                <div class="planet-health">
+                                    <div class="health-bar"></div>
+                                </div>
+                            </div>
+                            <div class="planet-status" data-planet="jupiter">
+                                <div class="planet-mini jupiter"></div>
+                                <div class="planet-health">
+                                    <div class="health-bar"></div>
+                                </div>
+                            </div>
+                            <div class="planet-status" data-planet="saturn">
+                                <div class="planet-mini saturn"></div>
+                                <div class="planet-health">
+                                    <div class="health-bar"></div>
+                                </div>
+                            </div>
+                            <div class="planet-status" data-planet="uranus">
+                                <div class="planet-mini uranus"></div>
+                                <div class="planet-health">
+                                    <div class="health-bar"></div>
+                                </div>
+                            </div>
+                            <div class="planet-status" data-planet="neptune">
+                                <div class="planet-mini neptune"></div>
+                                <div class="planet-health">
+                                    <div class="health-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="question-container" id="teamBQuestion">
+                            <div class="question-header">
+                                <span class="question-difficulty medium">Средний</span>
+                                <span class="question-timer" id="teamBTimer">30</span>
+                            </div>
+                            <p class="question-text">Какая сила действует на заряд 4 Кл в электрическом поле напряженностью 5 Н/Кл?</p>
+                            <div class="answer-options">
+                                <button class="answer-option" data-index="0">0.8 Н</button>
+                                <button class="answer-option" data-index="1">1.25 Н</button>
+                                <button class="answer-option" data-index="2">9 Н</button>
+                                <button class="answer-option" data-index="3">20 Н</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Статус игры -->
+                <div class="game-status">
+                    <div class="level-indicator">
+                        <span>Уровень: <strong id="currentLevel">1</strong></span>
+                        <div class="level-progress">
+                            <div class="progress-bar" id="levelProgress"></div>
+                        </div>
+                    </div>
+                    <div class="meteor-stats">
+                        <i class="fas fa-meteor"></i>
+                        <span>Уничтожено метеоритов: <strong id="meteorsDestroyed">0</strong></span>
+                    </div>
+                    <div class="time-elapsed">
+                        <i class="fas fa-clock"></i>
+                        <span>Время: <strong id="gameTime">00:00</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Экран паузы -->
+        <div class="pause-screen" id="pauseScreen">
+            <div class="pause-content">
+                <h2><i class="fas fa-pause"></i> Игра на паузе</h2>
+                <div class="pause-buttons">
+                    <button class="pause-btn resume-btn" id="resumeBtn">
+                        <i class="fas fa-play"></i> Продолжить
+                    </button>
+                    <button class="pause-btn restart-btn" id="restartBtn">
+                        <i class="fas fa-redo"></i> Начать заново
+                    </button>
+                    <button class="pause-btn menu-btn" id="toMenuBtn">
+                        <i class="fas fa-home"></i> В главное меню
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Экран окончания игры -->
+        <div class="game-over-screen" id="gameOverScreen">
+            <div class="game-over-content">
+                <h2 id="gameResultTitle">Гравитация под контролем!</h2>
+                <div class="result-icon" id="resultIcon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <p id="gameResultMessage">Все планеты сохранены! Солнечная система в безопасности.</p>
+                
+                <div class="final-scores">
+                    <div class="final-score team-a-final">
+                        <h3 id="finalTeamAName">Команда Альфа</h3>
+                        <div class="final-score-value" id="finalTeamAScore">0</div>
+                        <div class="final-planets">
+                            <div class="final-planet mercury saved" data-planet="mercury"></div>
+                            <div class="final-planet venus saved" data-planet="venus"></div>
+                            <div class="final-planet earth saved" data-planet="earth"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="final-score team-b-final">
+                        <h3 id="finalTeamBName">Команда Бета</h3>
+                        <div class="final-score-value" id="finalTeamBScore">0</div>
+                        <div class="final-planets">
+                            <div class="final-planet mars saved" data-planet="mars"></div>
+                            <div class="final-planet jupiter saved" data-planet="jupiter"></div>
+                            <div class="final-planet saturn saved" data-planet="saturn"></div>
+                            <div class="final-planet uranus saved" data-planet="uranus"></div>
+                            <div class="final-planet neptune saved" data-planet="neptune"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-over-buttons">
+                    <button class="game-over-btn play-again-btn" id="playAgainBtn">
+                        <i class="fas fa-redo"></i> Играть снова
+                    </button>
+                    <button class="game-over-btn main-menu-btn" id="toMainFromGameOverBtn">
+                        <i class="fas fa-home"></i> В главное меню
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Всплывающие уведомления -->
+        <div class="notification" id="notification">
+            <div class="notification-content"></div>
+        </div>
+    </div>
+
+    <script src="physics.js"></script>
+</body>
+</html>
